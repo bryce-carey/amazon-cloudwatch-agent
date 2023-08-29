@@ -48,6 +48,7 @@ func terminateInstances(cxt context.Context, ec2client *ec2.Client) {
 		"buildPKG",
 		"buildMSI",
 		"MSIUpgrade_*",
+		"EC2IntegrationTest",
 		"IntegrationTestBase",
 		"CWADockerImageBuilderX86",
 		"CWADockerImageBuilderARM64",
@@ -63,7 +64,7 @@ func terminateInstances(cxt context.Context, ec2client *ec2.Client) {
 			nameFilter,
 			{Name: aws.String("instance-state-name"),
 				Values: []string{"running"}}},
-		MaxResults: maxResults}
+		MaxResults: aws.Int32(maxResults)}
 	for {
 		instanceIds := make([]string, 0)
 		expirationDateInstance := time.Now().UTC().Add(clean.KeepDurationOneDay)
